@@ -15,7 +15,6 @@ export default new Vuex.Store({
     /*域名*/
     // 测试
     domainName: 'http://localhost:8088',
-    userUrlPre: 'http://localhost:8088/test/user/',
 
     count: 0,
     /*登录界面判断是否显示错误提示*/
