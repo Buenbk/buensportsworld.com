@@ -1,0 +1,39 @@
+<!DOCTYPE generatorConfiguration PUBLIC
+        "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <context id="simple" targetRuntime="MyBatis3Simple">
+        <commentGenerator>
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <property name="suppressAllComments" value="true"/>
+        </commentGenerator>
+
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/sports"
+                        userId="root"
+                        password="li764590923" />
+
+        <!--pojo的生成规则-->
+        <javaModelGenerator targetPackage="com.libokai.pojo" targetProject="src/main/java"/>
+
+        <!--mapper xml映射文件-->
+        <sqlMapGenerator targetPackage="com.libokai.mapper" targetProject="src/main/resources"/>
+
+        <!--mapper接口-->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.libokai.mapper" targetProject="src/main/java"/>
+
+        <!--配置哪些表需要进行代码生成
+        三个属性分别是：表名、pojo类名以及mapper接口（以及xml文件）名-->
+        <!--<table catalog="sports" tableName="article" domainObjectName="Article" mapperName="ArticleMapper"/>
+        <table catalog="sports" tableName="field" domainObjectName="Field" mapperName="FieldMapper"/>
+        <table catalog="sports" tableName="user" domainObjectName="User" mapperName="UserMapper"/>
+        <table catalog="sports" tableName="comment" domainObjectName="Comment" mapperName="CommentMapper"/>
+        <table catalog="sports" tableName="tag" domainObjectName="Tag" mapperName="TagMapper"/>-->
+
+        <!--<table tableName="email_password" domainObjectName="EmailPassword" mapperName="EmailPasswordMapper"/>-->
+
+        <!--<table tableName="news" domainObjectName="News" mapperName="NewsMapper"/>-->
+        <table catalog="sports" tableName="article_tag" domainObjectName="Article2Tag" mapperName="Article2TagMapper"/>
+    </context>
+</generatorConfiguration>

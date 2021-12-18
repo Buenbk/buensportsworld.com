@@ -1,0 +1,23 @@
+spring:
+  datasource:
+    username: root
+    password: li764590923
+    url: jdbc:mysql://localhost:3306/sports
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    type: com.alibaba.druid.pool.DruidDataSource
+    #schema: classpath:sql/mybatis
+    #initialization-mode:
+    druid:
+      stat-view-servlet:
+        enabled: true
+        login-username: admin
+        login-password: 123456
+      web-stat-filter:
+        enabled: true
+
+mybatis:
+  mapper-locations: classpath:com/libokai/mapper/*Mapper.xml
+  config-location: classpath:mybatis-config.xml
+
+server:
+  port: 8088

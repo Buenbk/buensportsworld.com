@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.libokai.mapper.FieldMapper">
+  <resultMap id="BaseResultMap" type="com.libokai.pojo.Field">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="adm_id" jdbcType="INTEGER" property="admId" />
+    <result column="state" jdbcType="INTEGER" property="state" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from field
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.libokai.pojo.Field">
+    insert into field (id, title, adm_id,
+      state)
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{admId,jdbcType=INTEGER}, 
+      #{state,jdbcType=INTEGER})
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.libokai.pojo.Field">
+    update field
+    set title = #{title,jdbcType=VARCHAR},
+      adm_id = #{admId,jdbcType=INTEGER},
+      state = #{state,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, adm_id, state
+    from field
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, title, adm_id, state
+    from field
+  </select>
+
+
+  <resultMap id="detailedFieldResultMap" type="com.libokai.pojo.Field">
+    <id property="id" column="field_id" />
+    <result property="title" column="field_title"/>
+    <association property="adm" resultMap="com.libokai.mapper.UserMapper.userResult"/>
+    <collection property="articles" ofType="com.libokai.pojo.Article" resultMap="com.libokai.mapper.ArticleMapper.articleResult"/>
+  </resultMap>
+
+  <select id="selectFieldDetails" resultMap="detailedFieldResultMap">
+    select
+      F.id as field_id,
+      F.title as field_title,
+      F.adm_id as field_adm_id,
+      U.id as user_id,
+      U.username as user_username,
+      U.email as user_email,
+      U.bio as user_bio,
+      U.user_img as user_img,
+      A.id as article_id,
+      A.field_id as article_field_id,
+      A.user_id as article_user_id,
+      A.created_on as article_created_on,
+      A.draft as draft,
+      A.body as article_body,
+      A.img_address as img_address,
+      C.id as comment_id,
+      C.article_id as comment_article_id,
+      C.user_id as comment_user_id,
+      C.body as comment_body,
+      T.id as tag_id,
+      T.name as tag_name
+    from field F
+           left outer join user U on F.adm_id = U.id
+           left outer join article A on F.id = A.field_id
+           left outer join comment C on A.id = C.article_id
+           left outer join article_tag AT on AT.article_id = A.id
+           left outer join tag T on AT.tag_id = T.id
+    where F.id = #{id};
+  </select>
+
+  <select id="selectByPrimaryKeySimple" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, title, adm_id, state
+    from field
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+</mapper>

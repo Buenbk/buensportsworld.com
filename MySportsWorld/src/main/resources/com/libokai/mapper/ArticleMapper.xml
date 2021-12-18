@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.libokai.mapper.ArticleMapper">
+  <resultMap id="BaseResultMap" type="com.libokai.pojo.Article">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="field_id" jdbcType="INTEGER" property="fieldId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="created_on" jdbcType="DATE" property="createdOn" />
+    <result column="draft" jdbcType="VARCHAR" property="draft" />
+    <result column="body" jdbcType="VARCHAR" property="body" />
+      <result column="img_address" jdbcType="VARCHAR" property="imgAddress" />
+  </resultMap>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from article
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.libokai.pojo.Article" useGeneratedKeys="true" keyProperty="id">
+    insert into article (field_id, user_id,
+      created_on, draft, body, img_address
+      )
+    values (#{fieldId,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER},
+      #{createdOn,jdbcType=DATE}, #{draft,jdbcType=VARCHAR}, #{body,jdbcType=VARCHAR}, #{imgAddress,jdbcType=VARCHAR}
+      )
+  </insert>
+  <update id="updateByPrimaryKey" parameterType="com.libokai.pojo.Article">
+    update article
+    set field_id = #{fieldId,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      created_on = #{createdOn,jdbcType=DATE},
+      draft = #{draft,jdbcType=VARCHAR},
+      body = #{body,jdbcType=VARCHAR},
+      img_address = #{imgAddress,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select id, field_id, user_id, created_on, draft, body, img_address
+    from article
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap">
+    select id, field_id, user_id, created_on, draft, body, img_address
+    from article
+  </select>
+
+
+
+  <resultMap id="articleResult" type="com.libokai.pojo.Article">
+    <id property="id" column="article_id"/>
+      <result property="fieldId" column="article_field_id"/>
+    <result property="createdOn" column="article_created_on"/>
+    <result property="draft" column="draft"/>
+    <result property="body" column="article_body"/>
+      <result property="imgAddress" column="img_address"/>
+    <association property="user" column="article_user_id" select="com.libokai.mapper.UserMapper.selectByPrimaryKey"/>
+    <collection property="comments" ofType="com.libokai.pojo.Comment" resultMap="com.libokai.mapper.CommentMapper.commentResult">
+    </collection>
+    <collection property="tags" ofType="com.libokai.pojo.Tag" resultMap="com.libokai.mapper.TagMapper.tagResult" >
+    </collection>
+<!--    <discriminator javaType="int" column="draft">
+      <case value="1" resultType="DraftPost"/>
+      <case value="0" resultType="RegularPost"/>
+    </discriminator>-->
+  </resultMap>
+
+  <select id="selectByPrimaryKeyDetails" parameterType="java.lang.Integer" resultMap="articleResult">
+    select A.id as article_id,
+           A.field_id as article_field_id,
+           A.user_id as article_user_id,
+           A.created_on as article_created_on,
+           A.draft as draft,
+           A.body as article_body,
+           A.img_address as img_address,
+           C.id as comment_id,
+           C.article_id as comment_article_id,
+           C.user_id as comment_user_id,
+           C.body as comment_body,
+           T.id as tag_id,
+           T.name as tag_name
+    from article A left outer join comment C on A.id = C.article_id
+                   left outer join article_tag AT on AT.article_id = A.id
+                   left outer join tag T on AT.tag_id = T.id
+    where A.id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <select id="selectAllDetails" resultMap="articleResult">
+    select A.id as article_id,
+           A.field_id as article_field_id,
+           A.user_id as article_user_id,
+           A.created_on as article_created_on,
+           A.draft as draft,
+           A.body as article_body,
+           A.img_address as img_address,
+           C.id as comment_id,
+           C.article_id as comment_article_id,
+           C.user_id as comment_user_id,
+           C.body as comment_body,
+           T.id as tag_id,
+           T.name as tag_name
+    from article A left outer join comment C on A.id = C.article_id
+                   left outer join article_tag AT on AT.article_id = A.id
+                   left outer join tag T on AT.tag_id = T.id
+  </select>
+
+    <select id="selectByUserId" parameterType="java.lang.Integer" resultMap="articleResult">
+        select A.id as article_id,
+               A.field_id as article_field_id,
+               A.user_id as article_user_id,
+               A.created_on as article_created_on,
+               A.draft as draft,
+               A.body as article_body,
+               A.img_address as img_address,
+               C.id as comment_id,
+               C.article_id as comment_article_id,
+               C.user_id as comment_user_id,
+               C.body as comment_body,
+               T.id as tag_id,
+               T.name as tag_name
+        from article A left outer join comment C on A.id = C.article_id
+                       left outer join article_tag AT on AT.article_id = A.id
+            left outer join tag T on AT.tag_id = T.id
+        where A.user_id = #{userId,jdbcType=INTEGER}
+    </select>
+
+    <select id="selectByFieldId" parameterType="java.lang.Integer" resultMap="articleResult">
+        select A.id as article_id,
+               A.field_id as article_field_id,
+               A.user_id as article_user_id,
+               A.created_on as article_created_on,
+               A.draft as draft,
+               A.body as article_body,
+               A.img_address as img_address,
+               C.id as comment_id,
+               C.article_id as comment_article_id,
+               C.user_id as comment_user_id,
+               C.body as comment_body,
+               T.id as tag_id,
+               T.name as tag_name
+        from article A left outer join comment C on A.id = C.article_id
+                       left outer join article_tag AT on AT.article_id = A.id
+            left outer join tag T on AT.tag_id = T.id
+        where A.field_id = #{fieldId,jdbcType=INTEGER}
+    </select>
+
+</mapper>
