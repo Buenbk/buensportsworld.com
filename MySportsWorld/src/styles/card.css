@@ -1,0 +1,57 @@
+[v-cloak] {display: none; }
+/**{ margin:0; padding:0; font-size: 12px;}*/
+/*html,body{background: #bb2628;position: relative;}*/
+ul,li,ol{ list-style: none;}
+.clearfix:after{ display: block; content: ''; clear: both;}
+
+.info-con,.info-link{color:#f39987;}
+.mb15{margin-bottom:15px;}
+.tc{text-align: center;}
+
+.wrap{ min-width:320px; max-width: 640px;padding:15px;left: 50px}
+.mask{position: fixed;z-index: 10; top:0;right:0;bottom:0;left:0; background: rgba(0,0,0,.7);color:red}
+.info-link{text-align:right;}
+.info-con li{text-indent:15px;line-height:24px;margin-bottom:8px; word-break:break-word;}
+.card-title{text-align: center; color: #f39987; font-size: 20px; margin-bottom: 20px;}
+.card-list{overflow: hidden;margin-bottom: 10px;}
+.card-list li{float: left; width: 45%; margin: 0 2.5% 20px; font-size: 0; box-shadow:0 0 8px 0 #666; position: relative;transform-style:preserve-3d;transition:1s;}
+.font,.back{position: absolute;top:0;right:0;backface-visibility:hidden;width:100%;}
+.back{transform:rotateY(180deg);z-index:6;background: #f39987; border-radius: 5px; overflow: hidden;padding:10px; box-sizing: border-box;color:#5b2e19}
+.card-list li:hover{transform:rotateY(180deg);}
+.card-list li img{ width: 100%;}
+.nums{ position: absolute; right:2px; top:2px; width: 20px; height: 20px; border-radius: 50%; background: #de1e2b; z-index: 5; text-align: center;line-height: 20px; font-size: 14px; color: #f5ba45; overflow: hidden;}
+.btn{ display: inline-block; border-radius: 15px; line-height: 30px; text-align: center; width: 40%; background: #ebc26a;color:#5b2e19; font-size: 14px; cursor: pointer; margin:0 4.5% 15px;}
+.btn a{text-decoration:none;color:#5b2e19;}
+.anxiang{color: #fff; border-bottom:1px solid #ebc26a; padding-bottom: 5px; margin-bottom: 15px;}
+.alert-wrap{ position: fixed; z-index: 15; left:50%; top:45%; width: 300px; height: 300px; border-radius: 5px; overflow: hidden; background: #edce95; margin-left: -150px; margin-top: -150px;}
+.close{position: absolute; right:2px; top:2px; width: 35px; height: 35px; border-radius: 50%; background: rgba(237,206,149,.7); text-align: center;line-height: 35px; font-size: 18px; color: #de1e2b;z-index: 20}
+.alert-wrap{transform:scale(0);animation:alertimg .5s forwards;-webkit-animation:alertimg .5s forwards;}
+@keyframes alertimg
+{
+  0% {transform:scale(0.5) rotateZ(0);}
+  100% {transform:scale(1) rotateZ(360deg)}
+}
+
+@-webkit-keyframes alertimg
+{
+  0% {transform:scale(0.5) rotateZ(0);}
+  100% {transform:scale(1) rotateZ(360deg)}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
